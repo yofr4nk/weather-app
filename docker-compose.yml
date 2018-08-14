@@ -1,0 +1,11 @@
+version: '2'
+services:
+  time-weather:
+    container_name: time-weather
+    image: node:8.9
+    working_dir: /usr/src/app/
+    command: bash -c 'yarn install && yarn run devserver'
+    volumes:
+      - ./:/usr/src/app/
+    ports:
+      - "3001:3001"
