@@ -5,7 +5,7 @@ const cors = require('koa-cors');
 const app = new koa();
 const router = new koaRouter();
 const PORT = process.env.PORT || 3000;
-const {setLocations} = require('./controllers/geolocationController');
+const {setLocations, getLocations} = require('./controllers/geolocationController');
 
 app.use(cors());
 app.use(koaBody({
@@ -14,7 +14,10 @@ app.use(koaBody({
   }
 }));
 
+// Setting geolocations to redis
 setLocations();
+
+router.get('/api/getLocations', getLocations);
 
 app.use(router.routes());
 app.use(router.allowedMethods());
