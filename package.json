@@ -19,6 +19,7 @@
     "koa-router": "^7.0.1",
     "lodash": "^4.17.4",
     "mocha": "^5.0.0",
+    "node-geocoder": "^3.22.0",
     "nodemon": "^1.18.3",
     "redis": "^2.8.0"
   }

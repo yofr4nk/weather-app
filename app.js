@@ -5,6 +5,7 @@ const cors = require('koa-cors');
 const app = new koa();
 const router = new koaRouter();
 const PORT = process.env.PORT || 3000;
+const {setLocations} = require('./controllers/geolocationController');
 
 app.use(cors());
 app.use(koaBody({
@@ -12,6 +13,8 @@ app.use(koaBody({
     json: ['application/x-javascript']
   }
 }));
+
+setLocations();
 
 app.use(router.routes());
 app.use(router.allowedMethods());
