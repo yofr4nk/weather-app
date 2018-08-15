@@ -42,13 +42,9 @@ const setLocations = async () => {
 	}
 }
 
-const getLocations = async (ctx) => {
-	try {
-		const positions = await redisService.getAsync('positions');
-  	ctx.body = JSON.parse(positions);
-	} catch(err) {
-		ctx.body = err;
-	}
+const getLocations = async () => {
+	const positions = await redisService.getAsync('positions');
+	return JSON.parse(positions);
 }
 
 module.exports = {
