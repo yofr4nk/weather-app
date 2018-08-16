@@ -5,14 +5,16 @@ const {head} = require('lodash');
 
 const geolocationsFormat = (locations) => {
 	const positions= {};
+	const countryCache = {};
 	for(let location of locations) {
 		location = head(location);
-		if(!positions[location.country]) {
-			positions[location.country] = {
-				address: `${location.state} (${location.countryCode})`,
+		if(!countryCache[location.country]) {
+			positions[`${location.latitude}${location.longitude}`] = {
+				address: `${location.country} ${location.state} (${location.countryCode})`,
 				latitude: location.latitude,
 				longitude: location.longitude
 			}
+			countryCache[location.country] = true;
 		}
 	}
 	return positions;
