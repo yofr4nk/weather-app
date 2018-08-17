@@ -9,7 +9,7 @@ const geolocationsFormat = (locations) => {
 	for(let location of locations) {
 		location = head(location);
 		if(!countryCache[location.country]) {
-			positions[`${location.latitude}${location.longitude}`] = {
+			positions[`${location.latitude}/${location.longitude}`] = {
 				address: `${location.country} ${location.state} (${location.countryCode})`,
 				latitude: location.latitude,
 				longitude: location.longitude
@@ -36,7 +36,6 @@ const setLocations = async () => {
 			return redisService.setAsync('positions', JSON.stringify(positions));
 		})
 		.catch(err => {
-			console.log(err);
 			return new Error(err);
 		});
 	} catch(err) {
