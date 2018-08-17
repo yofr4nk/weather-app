@@ -16,6 +16,7 @@ services:
     environment:
       - REDIS_URL=redis://redis:6379
       - PORT=3000
+      - SKY_DARK_URI="URI WITH KEY"
 
   redis:
     image: redis
