@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
-    "devserver": "./node_modules/nodemon/bin/nodemon.js app.js"
+    "devserver": "./node_modules/nodemon/bin/nodemon.js app.js",
+    "test": "mocha  ./test --recursive",
+    "test:watch": "mocha  ./test --recursive --watch"
   },
   "repository": "https://gitlab.com/yofr4nk/time-weather.git",
   "author": "Yofrank",
@@ -19,12 +21,13 @@
     "koa-json": "^2.0.2",
     "koa-router": "^7.0.1",
     "lodash": "^4.17.4",
-    "mocha": "^5.0.0",
+    "mocha": "^5.2.0",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
     "node-fetch": "^2.2.0",
     "nodemon": "^1.18.3",
     "redis": "^2.8.0",
-    "search-osm-batch": "^1.0.0"
+    "search-osm-batch": "^1.0.0",
+    "unit.js": "^2.0.0"
   }
 }

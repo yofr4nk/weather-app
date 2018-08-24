@@ -1,11 +1,28 @@
 const redis = require('redis');
 const {promisify} = require('util');
-const client = redis.createClient(process.env.REDIS_URL);
 
-module.exports = {
-  ...client,
-  getAsync: promisify(client.get).bind(client),
-  setAsync: promisify(client.set).bind(client),
-	keysAsync: promisify(client.keys).bind(client),
-	hsetAsync: promisify(client.hset).bind(client)
-};
+class RedisService {
+  constructor() {
+    this.client;
+    this.getAsync;
+    this.setAsync;
+    this.keysAsync;
+    this.hsetAsync;
+    this.init();
+  }
+
+  init() {
+    this.createClient();
+  }
+
+  createClient() {
+    this.client = redis.createClient(process.env.REDIS_URL);
+    this.getAsync = promisify(this.client.get).bind(this.client);
+    this.setAsync = promisify(this.client.set).bind(this.client);
+    this.keysAsync = promisify(this.client.keys).bind(this.client);
+    this.hsetAsync = promisify(this.client.hset).bind(this.client);
+  }
+
+}
+
+module.exports = RedisService;

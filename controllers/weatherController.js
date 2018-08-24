@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const {getLocations} = require('./geolocationController');
-const redisService = require('../redis-client/client');
+const RedisService = require('../redis-client/client');
 const BlueBird = require('bluebird');
 const errorMessage = 'How unfortunate! The API Request Failed';
 const {map} = require('lodash');
@@ -38,15 +38,16 @@ const passUNIXTimeToHour = (unixTime, timezone) => {
 
 const saveErrorLogs = async (err) => {
 	if(err.message === errorMessage) {
-		return await redisService.hsetAsync(new Date().getTime(), "api.errors", err.message);
+    const redisClient = new RedisService();
+		return await redisClient.hsetAsync(new Date().getTime(), "api.errors", err.message);
 	}
 	throw new Error(err);
 }
 
 const getWeather = ({lat, lon}) => {
 	const position = `${lat},${lon}`;
-	const exludeData = '?exclude=[hourly,daily,flags,minutely]';
-	return fetch(`${process.env.SKY_DARK_URI}${position}${exludeData}`, {
+	const excludeData = '?exclude=[hourly,daily,flags,minutely]';
+	return fetch(`${process.env.SKY_DARK_URI}${position}${excludeData}`, {
 		method: 'GET',
 		headers: {
 			'Cache-Control': 'no-cache',
