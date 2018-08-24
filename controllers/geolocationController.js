@@ -1,20 +1,17 @@
-const NodeGeocoder = require('node-geocoder');
+const batchSearch = require('search-osm-batch');
 const redisService = require('../redis-client/client');
-const BlueBird = require('bluebird');
-const {head} = require('lodash');
 
 const geolocationsFormat = (locations) => {
 	const positions= {};
 	const countryCache = {};
-	for(let location of locations) {
-		location = head(location);
-		if(!countryCache[location.country]) {
-			positions[`${location.latitude}/${location.longitude}`] = {
-				address: `${location.country} ${location.state} (${location.countryCode})`,
-				latitude: location.latitude,
-				longitude: location.longitude
+	for(const location of locations) {
+		if(!countryCache[location.address.country]) {
+			positions[`${location.lat}/${location.lon}`] = {
+				address: `${location.address.country} ${location.address.state} (${location.address.country_code})`,
+				latitude: location.lat,
+				longitude: location.lon
 			}
-			countryCache[location.country] = true;
+			countryCache[location.address.country] = true;
 		}
 	}
 	return positions;
@@ -22,22 +19,18 @@ const geolocationsFormat = (locations) => {
 
 const setLocations = async () => {
 	try {
-		const geocoder = NodeGeocoder({
-			provider: 'openstreetmap',
-		});
 		const countries = ['Georgia (USA)', 'Auckland (NZ)', 
 		'Santiago (CL)', 'Londres (UK)', 'Sydney (AU)', 'Zurich (CH)'];
-
-		return BlueBird.map(countries, res => {
-			return geocoder.geocode(res);
-		}, {concurrency: 6})
-		.then(locations => {
-			const positions = geolocationsFormat(locations);
-			return redisService.setAsync('positions', JSON.stringify(positions));
-		})
-		.catch(err => {
-			return new Error(err);
+		
+		const locations = await batchSearch(countries, {
+			format: 'json',
+			addressdetails: 1,
+			limit: 1,
+			dedupe: 1
 		});
+
+		const positions = geolocationsFormat(locations);
+		return redisService.setAsync('positions', JSON.stringify(positions));
 	} catch(err) {
 		throw new Error(err);
 	}
