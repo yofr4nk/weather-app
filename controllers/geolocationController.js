@@ -17,18 +17,16 @@ const geolocationsFormat = (locations) => {
 	return positions;
 }
 
-const setLocations = async () => {
-  const countries = ['Georgia (USA)', 'Auckland (NZ)', 
-  'Santiago (CL)', 'Londres (UK)', 'Sydney (AU)', 'Zurich (CH)'];
+const setLocations = async (places) => {
   const redisClient = new RedisService();
   
-  const locations = await batchSearch(countries, {
+  const locations = await batchSearch(places, {
     format: 'json',
     addressdetails: 1,
     limit: 1,
     dedupe: 1
   });
-  
+
   const positions = geolocationsFormat(locations);
   return redisClient.setAsync('positions', JSON.stringify(positions));
 }

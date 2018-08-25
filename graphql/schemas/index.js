@@ -7,11 +7,16 @@ const RootQuery = `
   type Query {
     forecast(places: [String]): [Place]
   }
+
+  type Mutation {
+    setPlaces(places: [String!]!): String
+  }
 `;
 
 const SchemaDefinition = `
   schema {
     query: Query
+    mutation: Mutation
   }
 `;
 
