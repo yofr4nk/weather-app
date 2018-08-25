@@ -1,8 +1,13 @@
 const Place = `
 type Place {
-  country: String
-  hour: String
-  temperature: String
+  name: String
+  address: String
+  latitude: Float
+  longitude: Float
+}
+
+type placeQuery {
+  get: [Place]
 }
 `;
 module.exports = () => [Place];

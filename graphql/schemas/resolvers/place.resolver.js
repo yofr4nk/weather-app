@@ -1,8 +1,10 @@
 const path = require('path');
-const {getWeatherFromPositions} = require(path.resolve('controllers', 'weatherController'));
+const {getLocations} = require(path.resolve('controllers', 'geolocationController'));
 
-const Place = (_, args, ctx, info) => {
-  return getWeatherFromPositions(args.places);
+const get = (_, args, ctx, info) => {
+  return {
+    get: getLocations(args.places)
+  }
 }
 
-module.exports = Place;
+module.exports = get;

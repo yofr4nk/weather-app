@@ -1,7 +1,7 @@
 version: '2'
 services:
-  time-weather:
-    container_name: time-weather
+  my_weather:
+    container_name: my-weather
     image: node:8.9
     working_dir: /usr/src/app/
     command: bash -c 'yarn install && yarn run devserver'
@@ -10,16 +10,12 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - redis
+      - dbmongo
     links:
-      - redis
+      - dbmongo
     environment:
-      - REDIS_URL=redis://redis:6379
       - PORT=3000
       - SKY_DARK_URI="URI WITH KEY"
 
-  redis:
-    image: redis
-    container_name: redis
-    ports:
-      - "6379:6379"
+  dbmongo: 
+    image: mongo

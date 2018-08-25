@@ -1,24 +1,19 @@
 const batchSearch = require('search-osm-batch');
-const RedisService = require('../redis-client/client');
+const PlaceClass = require('../models/Place');
 
 const geolocationsFormat = (locations) => {
-	const positions= {};
-	const countryCache = {};
-	for(const location of locations) {
-		if(!countryCache[location.address.country]) {
-			positions[`${location.lat}/${location.lon}`] = {
-				address: `${location.address.country} ${location.address.state} (${location.address.country_code})`,
-				latitude: location.lat,
-				longitude: location.lon
-			}
-			countryCache[location.address.country] = true;
-		}
-	}
-	return positions;
+  return locations.map(location => {
+    return {
+      name: `${location.address.country} ${location.address.state} (${location.address.country_code})`,
+      address: location.display_name,
+      latitude: parseFloat(location.lat),
+      longitude: parseFloat(location.lon)
+    };
+  });
 }
 
 const setLocations = async (places) => {
-  const redisClient = new RedisService();
+  const Place = new PlaceClass();
   
   const locations = await batchSearch(places, {
     format: 'json',
@@ -28,17 +23,12 @@ const setLocations = async (places) => {
   });
 
   const positions = geolocationsFormat(locations);
-  return redisClient.setAsync('positions', JSON.stringify(positions));
+  return Place.insertPlaces(positions);
 }
 
-const getLocations = async () => {
-  try {
-    const redisClient = new RedisService();
-    const positions = await redisClient.getAsync('positions');
-    return JSON.parse(positions);
-  } catch(err) {
-    throw new Error(err);
-  }
+const getLocations = () => {
+  const Place = new PlaceClass().Place;
+  return Place.find();
 }
 
 module.exports = {

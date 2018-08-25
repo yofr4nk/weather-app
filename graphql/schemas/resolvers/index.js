@@ -1,9 +1,11 @@
 const Place = require('./place.resolver');
 const setPlaces = require('./mutations/setPlaces.resolver');
+const Forecast = require('./forecast.resolver');
 
 const resolvers = {
 	Query: {
-		forecast: Place
+    Forecast,
+    Place,
   },
   Mutation: {
     setPlaces: setPlaces
