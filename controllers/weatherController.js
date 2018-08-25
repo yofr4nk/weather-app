@@ -6,7 +6,7 @@ const errorMessage = 'How unfortunate! The API Request Failed';
 const {map} = require('lodash');
 const moment = require('moment-timezone');
 
-const getWeatherFromPositions = async (ctx) => {
+const getWeatherFromPositions = async () => {
 	try{
 		if (Math.random(0, 1) < 0.1) throw new Error(errorMessage);
 		const getPositions = await getLocations();
@@ -14,7 +14,7 @@ const getWeatherFromPositions = async (ctx) => {
 			return getWeather({lat: getPositions[country].latitude, lon: getPositions[country].longitude})
 		}, {concurrency: 6})
 		.then(weathers => {
-			ctx.body = map(weathers, city => {
+			return map(weathers, city => {
 				return {
 					country: getPositions[`${city.latitude}/${city.longitude}`].address,
 					hour: passUNIXTimeToHour(city.currently.time, city.timezone),
@@ -25,7 +25,7 @@ const getWeatherFromPositions = async (ctx) => {
 	} catch(err) {
 		return saveErrorLogs(err)
 		.then(() => {
-			return getWeatherFromPositions(ctx)
+			return getWeatherFromPositions()
 		}).catch(err => {
 			throw new Error(err);
 		});
@@ -48,10 +48,7 @@ const getWeather = ({lat, lon}) => {
 	const position = `${lat},${lon}`;
 	const excludeData = '?exclude=[hourly,daily,flags,minutely]';
 	return fetch(`${process.env.SKY_DARK_URI}${position}${excludeData}`, {
-		method: 'GET',
-		headers: {
-			'Cache-Control': 'no-cache',
-		}
+		method: 'GET'
 	})
   .then(function(response) {
     return response.json();

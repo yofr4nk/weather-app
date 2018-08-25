@@ -18,23 +18,19 @@ const geolocationsFormat = (locations) => {
 }
 
 const setLocations = async () => {
-	try {
-		const countries = ['Georgia (USA)', 'Auckland (NZ)', 
-		'Santiago (CL)', 'Londres (UK)', 'Sydney (AU)', 'Zurich (CH)'];
-    const redisClient = new RedisService();
-    
-		const locations = await batchSearch(countries, {
-			format: 'json',
-			addressdetails: 1,
-			limit: 1,
-			dedupe: 1
-    });
-    
-		const positions = geolocationsFormat(locations);
-		return redisClient.setAsync('positions', JSON.stringify(positions));
-	} catch(err) {
-		throw new Error(err);
-	}
+  const countries = ['Georgia (USA)', 'Auckland (NZ)', 
+  'Santiago (CL)', 'Londres (UK)', 'Sydney (AU)', 'Zurich (CH)'];
+  const redisClient = new RedisService();
+  
+  const locations = await batchSearch(countries, {
+    format: 'json',
+    addressdetails: 1,
+    limit: 1,
+    dedupe: 1
+  });
+  
+  const positions = geolocationsFormat(locations);
+  return redisClient.setAsync('positions', JSON.stringify(positions));
 }
 
 const getLocations = async () => {
