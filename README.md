@@ -1,6 +1,6 @@
 # weather-server
 
-API REST Koa server to serve info about weather, connected to data with redis.
+API REST Koa server to serve info about weather
 
 #### Requirements
 Things what you need to install the server
@@ -10,9 +10,9 @@ Things what you need to install the server
 
 ### Versions
 
-Koa | Node | Npm | Redis |
---- | ---  | --- | ---   |
-***2.0.1*** | ***=8.9*** | ***5.6.0*** | ***2.8.0*** |
+Koa | Node | Npm |
+--- | ---  | --- |
+***2.0.1*** | ***=8.9*** | ***5.6.0*** |
 
 ### Get started
 - Clone the project
@@ -29,6 +29,7 @@ git clone https://github.com/yofr4nk/weather-app.git
 docker-compose up
 ```
 
-After to install the app, you can go to:
-```http://localhost:3000/api/getLocations```
+### To get a graphiql section
+
+- http://localhost:3000/graphiql
 
