@@ -4,9 +4,10 @@ const BlueBird = require('bluebird');
 const {map, find} = require('lodash');
 const moment = require('moment-timezone');
 
-const getWeatherFromPositions = async () => {
-  const positions = await getLocations();
-
+const getWeatherFromPositions = async (places, placesReadyToSearch) => {
+  let positions = placesReadyToSearch;
+  
+  if(!placesReadyToSearch) positions = await getLocations(places);
   return BlueBird.map(positions, (position) => {
     return getWeather({lat: position.latitude, lon: position.longitude})
   }, {concurrency: 6})

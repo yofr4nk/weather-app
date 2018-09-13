@@ -26,9 +26,19 @@ const setLocations = async (places) => {
   return Place.insertPlaces(positions);
 }
 
-const getLocations = () => {
+const getLocations = (places) => {
+  const condition = (places) ? { $or: [
+    {name: {$in: buildRegexSearchParams(places)}},
+    {address: {$in: buildRegexSearchParams(places)}}
+  ]} : {};
   const Place = new PlaceClass().Place;
-  return Place.find();
+  return Place.find(condition);
+}
+
+const buildRegexSearchParams = (params) => {
+  return params.map(param => {
+    return new RegExp(`${param}`, 'i');
+  });
 }
 
 module.exports = {

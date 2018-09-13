@@ -5,4 +5,6 @@ const setPlaces = (_, args, ctx, info) => {
   return setLocations(args.places);
 }
 
-module.exports = setPlaces;
+module.exports = {
+  setPlaces
+};

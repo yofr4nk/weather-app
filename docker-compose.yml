@@ -2,19 +2,19 @@ version: '2'
 services:
   my_weather:
     container_name: my-weather
-    image: node:8.9
+    image: node:8.11.3
     working_dir: /usr/src/app/
     command: bash -c 'yarn install && yarn run devserver'
     volumes:
       - ./:/usr/src/app/
     ports:
-      - "3000:3000"
+      - "8088:8088"
     depends_on:
       - dbmongo
     links:
       - dbmongo
     environment:
-      - PORT=3000
+      - PORT=8088
       - SKY_DARK_URI="URI WITH KEY"
 
   dbmongo: 

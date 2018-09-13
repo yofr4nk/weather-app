@@ -4,10 +4,12 @@ type Place {
   address: String
   latitude: Float
   longitude: Float
+  weatherPlace: WeatherPlace
 }
 
-type placeQuery {
-  get: [Place]
+type place {
+  get(places: [String!]): [Place]
 }
 `;
+
 module.exports = () => [Place];

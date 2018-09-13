@@ -1,10 +1,12 @@
 const path = require('path');
 const {getWeatherFromPositions} = require(path.resolve('controllers', 'weatherController'));
 
-const get = (_, args, ctx, info) => {
+const forecast = () => {
   return {
-    get: getWeatherFromPositions(args.places)
+    get: (args, ctx, info) => {
+      return getWeatherFromPositions(args.places);
+    }
   }
 }
 
-module.exports = get;
+module.exports = {forecast};

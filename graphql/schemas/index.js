@@ -3,12 +3,12 @@ const { makeExecutableSchema } = require('graphql-tools');
 const Place = require('./Place.js');
 const WeatherPlacePlace = require('./WeatherPlace.js');
 const Forecast = require('./Forecast.js');
-const resolvers = require('./resolvers/index.js');
+const resolvers = require('./resolvers/');
 
 const RootQuery = `
   type Query {
-    Forecast: forecastQuery
-    Place: placeQuery
+    forecast: forecastQuery
+    place: place
   }
 
   type Mutation {
