@@ -21,24 +21,14 @@ const setLocations = async (places) => {
     limit: 1,
     dedupe: 1
   });
-
+  
   const positions = geolocationsFormat(locations);
   return Place.insertPlaces(positions);
 }
 
 const getLocations = (places) => {
-  const condition = (places) ? { $or: [
-    {name: {$in: buildRegexSearchParams(places)}},
-    {address: {$in: buildRegexSearchParams(places)}}
-  ]} : {};
-  const Place = new PlaceClass().Place;
-  return Place.find(condition);
-}
-
-const buildRegexSearchParams = (params) => {
-  return params.map(param => {
-    return new RegExp(`${param}`, 'i');
-  });
+  const Place = new PlaceClass();
+  return Place.getPlaces(places);
 }
 
 module.exports = {

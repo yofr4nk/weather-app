@@ -35,6 +35,22 @@ class Place {
       return this.Place.findOneAndUpdate({name: place.name}, place, { upsert: true, new: true });
     }, {concurrency: 5});
   }
+
+  getPlaces(places) {
+    const buildRegexParams = this.buildRegexSearchParams(places);
+    const condition = (places) ? { $or: [
+      {name: {$in: buildRegexParams}},
+      {address: {$in: buildRegexParams}}
+    ]} : {};
+    return this.Place.find(condition);
+  }
+
+  buildRegexSearchParams(params) {
+    if(params)
+      return params.map(param => {
+        return new RegExp(`${param}`, 'i');
+      });
+  }
 }
 
 module.exports = Place;
