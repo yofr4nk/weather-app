@@ -18,7 +18,10 @@ const getWeatherFromPositions = async (places, placesReadyToSearch) => {
         name: positionMatch.name,
         address: positionMatch.address,
         hour: passUNIXTimeToHour(city.currently.time, city.timezone),
-        temperature: city.currently.temperature
+        temperature: {
+          F: Math.round(city.currently.temperature),
+          C: toCelsiusConvert(city.currently.temperature)
+        }
       }
     });
   })
@@ -28,7 +31,12 @@ const getWeatherFromPositions = async (places, placesReadyToSearch) => {
 }
 
 const passUNIXTimeToHour = (unixTime, timezone) => {
-	return moment.unix(unixTime).tz(timezone).format('HH:mm');
+	return moment.unix(unixTime).tz(timezone).format('LT');
+}
+
+const toCelsiusConvert = (value) => {
+  const initialState = value - 32;
+  return Math.round((initialState * 5) / 9);
 }
 
 const getWeather = ({lat, lon}) => {
