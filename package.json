@@ -1,6 +1,6 @@
 {
   "name": "time-weather",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Weather app",
   "main": "index.js",
   "scripts": {
@@ -23,11 +23,11 @@
     "koa-cors": "0.0.16",
     "koa-json": "^2.0.2",
     "koa-router": "^7.0.1",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.12",
     "mocha": "^5.2.0",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
-    "mongoose": "^5.2.9",
+    "mongoose": "^5.7.5",
     "node-fetch": "^2.2.0",
     "nodemon": "^1.18.3",
     "search-osm-batch": "^1.0.0",
