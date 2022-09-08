@@ -1,8 +1,8 @@
-version: '2'
+version: '3'
 services:
   my_weather:
     container_name: my-weather
-    image: node:8.11.3
+    image: node:14-alpine
     working_dir: /usr/src/app/
     command: bash -c 'yarn install && yarn run devserver'
     volumes:
@@ -17,5 +17,5 @@ services:
       - PORT=8088
       - SKY_DARK_URI="URI WITH KEY"
 
-  dbmongo: 
+  dbmongo:
     image: mongo

@@ -6,7 +6,7 @@ describe('weatherController testing', () => {
   it('passUNIXTimeToHour should pass unix time to hour format', () => {
     const unixTime = 1535117306;
     const timeZone = 'America/New_York';
-    const expectedHour = '09:28';
+    const expectedHour = '9:28 AM';
     value(passUNIXTimeToHour(unixTime, timeZone)).is(expectedHour);
   });
 });
