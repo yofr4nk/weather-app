@@ -30,7 +30,7 @@
     "mongoose": "^5.7.5",
     "node-fetch": "^2.6.1",
     "nodemon": "^1.18.3",
-    "search-osm-batch": "^1.0.0",
+    "search-osm-batch": "1.1.2",
     "unit.js": "^2.0.0"
   }
 }

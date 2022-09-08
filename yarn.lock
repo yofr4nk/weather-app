@@ -2092,7 +2092,7 @@ saslprep@^1.0.0:
   dependencies:
     sparse-bitfield "^3.0.3"
 
-search-osm-batch@^1.0.0:
+search-osm-batch@1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/search-osm-batch/-/search-osm-batch-1.1.2.tgz#e633730299183a637108a4cac2cd7baa6beceafc"
   integrity sha512-pIYi/BAsSmIxZXN/6dvh3xr5/F7734baSd6rLy1IhSaR5JBaJlPig+JsSBHsLREi3m+uve7OnFS/uZWQgJHg5Q==
